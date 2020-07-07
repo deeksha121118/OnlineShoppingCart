@@ -1,0 +1,89 @@
+<div class="container py-5">
+    <div *ngFor="let alert of alerts">
+        <alert type="success" dismissOnTimeout="5000" (onClosed)="onClosed(alert)">Bill Generated Successfully!</alert>
+    </div>
+    <div class="cart text-center" *ngIf="this.carts.length == 0">
+        <h4>Your Cart Is Empty!</h4>
+        <h6><a href="/products">Click here</a> to add products to the cart.</h6> 
+    </div>
+    <div class="container" *ngIf="this.carts.length != 0">
+        <div class="d-flex mb-5">
+            <div class="mr-3">
+                <button class="btn btn-primary" type="button" (click)="addProducts()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add Products To The Cart
+                </button>  
+            </div>
+            <div class="">
+                <button class="btn btn-primary" type="button" (click)="generateBill()">
+                    Generate Bill
+                </button>  
+            </div>
+        </div>
+        <div id="table-pdf">
+            <h1 class="text-center" *ngIf="downloadPDF" [ngClass]="{ 'd-none': !downloadPDF }">Invoice</h1>
+            <table class="table table-striped">            
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Cost</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                        <th *ngIf="!downloadPDF" [ngClass]="{ 'd-none': downloadPDF }">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cart of carts; let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{cart.name}}<br><h6 class="text-muted">{{cart.category.name}}</h6></td>
+                        <td class="">{{cart.cost}}<br>
+                            <h6 class="text-muted" *ngIf="!IDday">(-{{cart.discount}}%) {{(cart.cost - (cart.cost * (cart.discount/100)))}}</h6>
+                            <h6 class="text-muted" *ngIf="IDday">(-{{cart.discount + cart.addIDdiscount}}%) {{(cart.cost - (cart.cost * ((cart.discount+cart.addIDdiscount)/100)))}}</h6>
+                        </td>
+                        <td class="w-15" *ngIf="!downloadPDF" [ngClass]="{ 'd-none': downloadPDF }">
+                            <input class="form-control" type="text" placeholder="Quantity" [(ngModel)] = "cart.quantity" (ngModelChange)="valueChange($event)">
+                        </td>
+                        <td class="w-15" *ngIf="downloadPDF" [ngClass]="{ 'd-none': !downloadPDF }">
+                            {{cart.quantity}}
+                        </td>
+                        <td class="" *ngIf="!qChanged">{{cart.cost * cart.quantity}}<br>
+                            <h6 class="text-muted" *ngIf="!IDday">(-{{cart.discount}}%) {{(cart.cost - (cart.cost * (cart.discount/100))) * cart.quantity}}</h6>
+                            <h6 class="text-muted" *ngIf="IDday">(-{{cart.discount + cart.addIDdiscount}}%) {{(cart.cost - (cart.cost * ((cart.discount+cart.addIDdiscount)/100))) * cart.quantity}}</h6>
+                        </td>
+                        <td class="" *ngIf="qChanged">{{cart.cost}}<br>
+                            <h6 class="text-muted" *ngIf="!IDday">(-{{cart.discount}}%) {{(cart.cost - (cart.cost * (cart.discount/100)))}}</h6>
+                            <h6 class="text-muted" *ngIf="IDday">(-{{cart.discount + cart.addIDdiscount}}%) {{(cart.cost - (cart.cost * ((cart.discount+cart.addIDdiscount)/100)))}}</h6>
+                        </td>
+                        <td *ngIf="!downloadPDF" [ngClass]="{ 'd-none': downloadPDF }">
+                            <button class="btn btn-primary" type="button" (click)="delete(i)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="4">Sub Total</th>
+                        <th class="" colspan="2">
+                            {{subtotal}}<br>
+                            <h6 class="text-muted" *ngIf="subtotal > 2500">(-10%) {{(subtotal - (subtotal * (10/100)))}}</h6>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="4"></th>
+                        <td class="" colspan="2">
+                            + {{deliveryCharges}} (Delivery Charges)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="4">Total Bill Amount</th>
+                        <th class="" colspan="2" *ngIf="subtotal <= 2500">
+                            {{subtotal + deliveryCharges}}
+                        </th>
+                        <th class="" colspan="2" *ngIf="subtotal > 2500">
+                            {{(subtotal - (subtotal * (10/100))) + deliveryCharges}}
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </div>
+</div>

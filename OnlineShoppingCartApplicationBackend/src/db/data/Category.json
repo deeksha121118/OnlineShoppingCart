@@ -1,0 +1,6 @@
+[
+    {"name": "Home Appliances", "deliveryCharges": 150},
+    {"name": "Computers", "deliveryCharges": 0},
+    {"name": "Mobile", "deliveryCharges": 50},
+    {"name": "Furniture", "deliveryCharges": 500}
+]

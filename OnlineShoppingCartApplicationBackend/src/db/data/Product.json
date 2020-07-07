@@ -1,0 +1,8 @@
+[
+    {"name": "Mixer Grinder", "category": "Home Appliances", "cost": 2000, "discount": 4, "addIDdiscount": 3},
+    {"name": "Microwave", "category": "Home Appliances", "cost": 5000, "discount": 12, "addIDdiscount": 2},
+    {"name": "Keyboard", "category": "Computers", "cost": 500, "discount": 0, "addIDdiscount": 5},
+    {"name": "SD Card", "category": "Mobile", "cost": 1200, "discount": 6, "addIDdiscount": 8},
+    {"name": "Recliner", "category": "Furniture", "cost": 40000, "discount": 20, "addIDdiscount": 25},
+    {"name": "Dining table", "category": "Furniture", "cost": 36000, "discount": 15, "addIDdiscount": 10}
+]

@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" placeholder="Search" [formControl]="search">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products; let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{product.name}}<br><h6 class="text-muted">{{product.category.name}}</h6></td>
+                    <td>{{product.cost}}</td>
+                    <td>
+                        <button class="btn btn-primary" type="button" (click)="addToCart(i)">
+                            Add To Cart
+                        </button>  
+                    </td>
+                </tr>
+                <tr *ngIf="products.length == 0">
+                    <td class="text-center" colspan="4">
+                        <i class="fa fa-exclamation-circle i-font-size" aria-hidden="true"></i><br>
+                        <h5>No Data Available</h5>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
