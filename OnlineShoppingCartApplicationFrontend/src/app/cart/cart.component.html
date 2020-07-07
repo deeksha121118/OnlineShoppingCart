@@ -64,7 +64,7 @@
                         <th class="text-center" colspan="4">Sub Total</th>
                         <th class="" colspan="2">
                             {{subtotal}}<br>
-                            <h6 class="text-muted" *ngIf="subtotal > 2500">(-10%) {{(subtotal - (subtotal * (10/100)))}}</h6>
+                            <h6 class="text-muted" *ngIf="subtotal > 25000">(-10%) {{(subtotal - (subtotal * (10/100)))}}</h6>
                         </th>
                     </tr>
                     <tr>
@@ -75,10 +75,10 @@
                     </tr>
                     <tr>
                         <th class="text-center" colspan="4">Total Bill Amount</th>
-                        <th class="" colspan="2" *ngIf="subtotal <= 2500">
+                        <th class="" colspan="2" *ngIf="subtotal <= 25000">
                             {{subtotal + deliveryCharges}}
                         </th>
-                        <th class="" colspan="2" *ngIf="subtotal > 2500">
+                        <th class="" colspan="2" *ngIf="subtotal > 25000">
                             {{(subtotal - (subtotal * (10/100))) + deliveryCharges}}
                         </th>
                     </tr>
